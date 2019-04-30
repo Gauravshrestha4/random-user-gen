@@ -10,6 +10,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 const styles = {
   root: {
     flexGrow: 1,
+    
+  },
+  appbar:{
+    backgroundColor:'rgba(0,0,0,0.8) !important',
+    color:'#f9a825',
   },
   menuButton: {
     marginLeft: -18,
@@ -21,7 +26,7 @@ function DenseAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appbar} >
         <Toolbar variant="dense">
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />

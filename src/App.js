@@ -9,7 +9,7 @@ class App extends React.Component {
     isAnimate:false,
     isShowData:false
   }
-  
+
   onHandleSubmit=()=>{
     fetch(`https://randomuser.me/api/`)
     .then(res=>res.json())
@@ -20,7 +20,7 @@ class App extends React.Component {
         email:data.email,
         contact:data.phone,
         location:data.location.city,
-        dob:data.dob.date,
+        dob:data.dob.date.toString("MMMM yyyy"),
         password:data.login.password,
         picture:data.picture.large
       }
@@ -44,7 +44,7 @@ class App extends React.Component {
       <div className="App">
           <Appbar/>
           {this.state.isShowData && <Profile isAnimate={this.state.isAnimate} user={this.state.user}/> }
-          <Button onHandleSubmit={this.onHandleSubmit}/>
+          <Button onHandleSubmit={this.onHandleSubmit} isShowData={this.state.isShowData}/>
           
       </div>
     );

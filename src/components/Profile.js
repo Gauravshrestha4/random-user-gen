@@ -10,7 +10,7 @@ import
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import {Typography,Tooltip} from '@material-ui/core';
 import {SkipPrevious,Lock,SettingsPhone,CalendarToday,ContactSupport,LocationOn,Email} from '@material-ui/icons';
 import {PlayArrow} from '@material-ui/icons';
 import {SkipNext} from '@material-ui/icons';
@@ -20,7 +20,8 @@ const styles = theme => ({
     display: 'flex',
     margin:'50px auto',
     maxWidth:'800px',
-    height:400
+    height:400,
+    backgroundColor:'rgba(0,0,0,0.7)'
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -53,13 +54,10 @@ const styles = theme => ({
     margin: 10,
     width: 150,
     height: 150,
-    
-  },
-  icon:{
-    padding:'0 auto',
-    width:'100%'
+    border:'2px solid #f9a825',
   },
   icons:{
+    color:'#f9a825',
     width:'100%',
     display:'flex',
     justifyContent:'space-evenly',
@@ -69,77 +67,56 @@ const styles = theme => ({
 function MediaControlCard(props) {
   console.log('props|user', props.user);
   
-  const [isHoverOn,setIsHoverOn]=useState(false);
+  const [key,setKey]=useState('');
   const { classes, theme } = props;
   const user=Object.entries(props.user);
   console.log(user);
 
-  const hoverOn=()=>{
-    console.log('hover on')
-    setIsHoverOn(true);
-  }
-  const hoverOff=()=>{
-    console.log('hover off')
-    setIsHoverOn(false);
-  }
   let color1 = ""
 
   const handleChange = (name) => {
-    if(name === 'ContactSupport'){
-      color1 = "chocolate"
-    }
+    setKey(name);
   }
   return (
       
-    <Card className={classes.card} style={props.isAnimate?{animation:'shake 0.3s',border:'1px solid blue'}:null}>
-      
-      {/* <CardMedia
-        className={classes.cover}
-        image={user.picture.large}
-        title="Live from space album cover"
-      /> */}
-      {/* <div className={classes.details}>
-        <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
-            {`${user.name.first} ${user.name.last}`}
-          </Typography>
-          <Typography component="h6" variant="h6">
-            {user.dob.date}
-          </Typography>
-          <Typography component="h6" variant="h6">
-            {user.login.username}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            {user.phone}
-          </Typography>
-        </CardContent>
-        
-      </div>  */}
-
+    <Card className={classes.card} 
+    style={props.isAnimate?
+    {animation:'shake 0.3s',border:'1px solid #f9a825'}
+    :null}>
       <Grid container >
         <Grid item xs={12} container justify="center" alignItems="center">
-        <Avatar alt="author" src={user[6][1]} className={classes.avatar} style={props.isAnimate?{animation:'rotate 0.3s linear'}:null} />
+        <Avatar alt="author" src={user[6][1]} className={classes.avatar} 
+        style={props.isAnimate?{animation:'rotate 0.3s linear'}:null} />
       </Grid>
         {
           user.filter(info=>info[0]!='picture').map(info=>
-          (<Grid item xs={4} key={info[0]} style={!isHoverOn?{display:'hidden'}:{display:'block'}}>
-          <Paper className={classes.paper} style={{backgroundColor: color1}} key={color1.length}>{info[1]}</Paper>
+          (<Grid item xs={4} key={info[0]} >
+          <Paper className={classes.paper} 
+          style={info[0]==key?{backgroundColor:'#ffee58 ',transition:'background-color 0.5s ease-in' }:null} >{info[1]}
+          </Paper>
         </Grid>)
           )
         }
         <div className={classes.icons}>
-       
-          <ContactSupport onClick={() => { console.log('onClick'); handleChange('ContactSupport')}}/>
-        
-          <Email/>
-      
-          <SettingsPhone/>
-      
-          <CalendarToday/>
-       
-          <LocationOn/>
-      
-          <Lock/>
+          <Tooltip title="Name">
+            <ContactSupport onMouseOver={() => { handleChange('name')}}/>
+          </Tooltip>
+          <Tooltip title="Email">
+             <Email onMouseOver={() => { handleChange('email')}}/>
+          </Tooltip>
+          <Tooltip title="Contact">
+            <SettingsPhone onMouseOver={() => { handleChange('contact')}}/>
+          </Tooltip>
+          <Tooltip title="Location">
+            <LocationOn onMouseOver={() => { handleChange('location')}}/>
+          </Tooltip>
+          <Tooltip title="Date of Birth">
+            <CalendarToday onMouseOver={() => { handleChange('dob')}}/>
+          </Tooltip>
+          <Tooltip title="Password">
+            <Lock onMouseOver={() => { handleChange('password')}}/>
+          </Tooltip>
+   
         
         </div>
         

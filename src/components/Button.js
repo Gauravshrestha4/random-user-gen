@@ -6,8 +6,19 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
 
-  button: {
+  buttonBottom: {
     marginLeft:'45%',
+    backgroundColor:'#f9a825',
+    color:'black',
+  },
+  buttonTop:{
+    marginLeft:'43%',
+    backgroundColor:'#f9a825',
+    color:'black',
+    position:'relative',
+    top:300,
+    width:200,
+    height:40
   },
   input: {
     display: 'none',
@@ -15,7 +26,7 @@ const styles = theme => ({
 });
 
 function ContainedButtons(props) {
-    const {onHandleSubmit}=props;
+    const {onHandleSubmit,isShowData}=props;
 
   const handleClick=(e)=>{
     e.preventDefault();
@@ -24,7 +35,9 @@ function ContainedButtons(props) {
   const { classes } = props;
   return (
     <React.Fragment>
-        <Button variant="contained" color="secondary" className={classes.button} onClick={handleClick}>
+        <Button variant="contained" color="#f9a825" 
+          className={isShowData?classes.buttonBottom:classes.buttonTop} 
+          onClick={handleClick}>
         Fetch data
       </Button>
     </React.Fragment>
